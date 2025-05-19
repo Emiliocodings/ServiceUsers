@@ -7,7 +7,7 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   args: ['push', 'us-central1-docker.pkg.dev/$PROJECT_ID/user-management-api/app:$COMMIT_SHA']
 
-# Install dependencies
+# Install
 - name: 'python:3.9'
   entrypoint: pip
   args: ['install', '-r', 'requirements.txt']
