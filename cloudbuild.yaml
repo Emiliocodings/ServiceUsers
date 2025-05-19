@@ -1,11 +1,11 @@
 steps:
 # Build the container image
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'gcr.io/$PROJECT_ID/user-management-api:$COMMIT_SHA', '.', '--progress=plain']
+  args: ['build', '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/user-management-api/app:$COMMIT_SHA', '.', '--progress=plain']
 
-# Push the container image to Container Registry
+# Push the container image to Artifact Registry
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'gcr.io/$PROJECT_ID/user-management-api:$COMMIT_SHA']
+  args: ['push', 'us-central1-docker.pkg.dev/$PROJECT_ID/user-management-api/app:$COMMIT_SHA']
 
 # Install dependencies
 - name: 'python:3.9'
@@ -24,17 +24,17 @@ steps:
     - 'run'
     - 'deploy'
     - 'user-management-api'
-    - '--source'
-    - '.'
+    - '--image'
+    - 'us-central1-docker.pkg.dev/$PROJECT_ID/user-management-api/app:$COMMIT_SHA'
     - '--region'
     - 'us-central1'
     - '--platform'
     - 'managed'
     - '--allow-unauthenticated'
 
-# Store the image in Container Registry
+# Store the image in Artifact Registry
 images:
-- 'gcr.io/$PROJECT_ID/user-management-api:$COMMIT_SHA'
+- 'us-central1-docker.pkg.dev/$PROJECT_ID/user-management-api/app:$COMMIT_SHA'
 
 # Define substitution variables
 substitutions:
