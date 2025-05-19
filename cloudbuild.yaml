@@ -1,4 +1,22 @@
 steps:
+# Install dependencies
+- name: 'python:3.9'
+  entrypoint: pip
+  args: ['install', '-r', 'requirements.txt']
+
+# Run tests
+- name: 'python:3.9'
+  entrypoint: bash
+  args:
+    - '-c'
+    - |
+      pip install -r requirements.txt
+      pytest tests/ -v
+
+# Authenticate to Artifact Registry
+- name: 'gcr.io/cloud-builders/gcloud'
+  args: ['auth', 'configure-docker', 'us-central1-docker.pkg.dev']
+
 # Build the container image
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build', '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/user-management-api/app:$COMMIT_SHA', '.', '--progress=plain']
@@ -6,16 +24,6 @@ steps:
 # Push the container image to Artifact Registry
 - name: 'gcr.io/cloud-builders/docker'
   args: ['push', 'us-central1-docker.pkg.dev/$PROJECT_ID/user-management-api/app:$COMMIT_SHA']
-
-# Install
-- name: 'python:3.9'
-  entrypoint: pip
-  args: ['install', '-r', 'requirements.txt']
-
-# Run tests
-- name: 'python:3.9'
-  entrypoint: pytest
-  args: ['tests/', '-v']
 
 # Deploy to Cloud Run
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
