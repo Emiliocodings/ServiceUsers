@@ -1,19 +1,19 @@
 steps:
 # Build the container image
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'gcr.io/$PROJECT_ID/user-management-api:$COMMIT_SHA', '.']
+  args: ['build', '-t', 'gcr.io/$PROJECT_ID/user-management-api:$COMMIT_SHA', '.', '--progress=plain']
 
 # Push the container image to Container Registry
 - name: 'gcr.io/cloud-builders/docker'
   args: ['push', 'gcr.io/$PROJECT_ID/user-management-api:$COMMIT_SHA']
 
 # Install dependencies
-- name: 'python:3.13'
+- name: 'python:3.9'
   entrypoint: pip
   args: ['install', '-r', 'requirements.txt']
 
 # Run tests
-- name: 'python:3.13'
+- name: 'python:3.9'
   entrypoint: pytest
   args: ['tests/', '-v']
 
