@@ -1,0 +1,50 @@
+steps:
+# Build the container image
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/$PROJECT_ID/user-management-api:$COMMIT_SHA', '.']
+
+# Push the container image to Container Registry
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/$PROJECT_ID/user-management-api:$COMMIT_SHA']
+
+# Install dependencies
+- name: 'python:3.13'
+  entrypoint: pip
+  args: ['install', '-r', 'requirements.txt']
+
+# Run tests
+- name: 'python:3.13'
+  entrypoint: pytest
+  args: ['tests/', '-v']
+
+# Deploy to Cloud Run
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  entrypoint: gcloud
+  args:
+    - 'run'
+    - 'deploy'
+    - 'user-management-api'
+    - '--source'
+    - '.'
+    - '--region'
+    - 'us-central1'
+    - '--platform'
+    - 'managed'
+    - '--allow-unauthenticated'
+
+# Store the image in Container Registry
+images:
+- 'gcr.io/$PROJECT_ID/user-management-api:$COMMIT_SHA'
+
+# Define substitution variables
+substitutions:
+  _DATABASE_URL: ''  # This will be set in Cloud Build trigger
+
+# Timeout for the build
+timeout: '1800s'  # 30 minutes
+
+# Build options
+options:
+  logging: CLOUD_LOGGING_ONLY
+  machineType: 'E2_HIGHCPU_8'
+  dynamicSubstitutions: true 

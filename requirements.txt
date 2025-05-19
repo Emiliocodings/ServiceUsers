@@ -1,0 +1,14 @@
+fastapi>=0.109.0
+uvicorn>=0.27.0
+sqlalchemy>=2.0.25
+pydantic>=2.6.1
+# Basic packages without compilation
+python-multipart>=0.0.6
+alembic>=1.13.1
+aiosqlite>=0.19.0
+python-dotenv>=1.0.0
+
+# Testing dependencies
+pytest>=8.0.0
+pytest-asyncio>=0.23.5
+httpx>=0.26.0
