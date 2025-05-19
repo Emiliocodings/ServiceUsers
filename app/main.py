@@ -6,9 +6,9 @@ from . import models, schemas, database
 from .database import engine
 
 app = FastAPI(
-    title="User Management API",
+    title="LATAM Airlines",
     description="""
-    A RESTful API for user management with complete CRUD operations.
+    RESTful API for International Flight Operations made by Emilio Benitez Diaz
     
     ## Features
     * Create new users
@@ -16,9 +16,6 @@ app = FastAPI(
     * Update user details
     * Delete users
     * List all users with pagination
-    
-    ## Authentication
-    This API is currently unauthenticated. In production, you should implement proper authentication.
     
     ## Database
     The API uses SQLAlchemy with SQLite for local development and supports PostgreSQL for production.

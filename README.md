@@ -1,21 +1,8 @@
-# User Management API
-
-A RESTful API for user management built with FastAPI and deployed on Google Cloud Platform.
-
-## Features
-
-- Complete CRUD operations for user management
-- Input validation and error handling
-- Async database operations
-- Comprehensive test suite
-- GCP Cloud Run deployment ready
-
 ## Local Development
 
 1. Create and activate virtual environment:
 ```bash
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+python -m venv venv source venv/bin/activate
 ```
 
 2. Install dependencies:
@@ -35,13 +22,10 @@ pytest tests/ -v
 
 ## API Documentation
 
-Once the application is running, you can access:
 - Swagger UI: http://localhost:8000/docs
 - ReDoc: http://localhost:8000/redoc
 
 ## Deployment to GCP
-
-### Prerequisites
 
 1. Install and initialize [Google Cloud SDK](https://cloud.google.com/sdk/docs/install)
 2. Enable required APIs:
